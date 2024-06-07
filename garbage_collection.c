@@ -70,7 +70,7 @@ void InitGcVictimMap()
 
 void GarbageCollection(unsigned int dieNo)
 {
-	xil_printf("GarbageCollection\n");
+	//xil_printf("Activate GarbageCollection!!\r\n");
 	unsigned int victimBlockNo, pageNo, virtualSliceAddr, logicalSliceAddr, dieNoForGcCopy, reqSlotTag;
 
 	victimBlockNo = GetFromGcVictimList(dieNo);
@@ -105,6 +105,7 @@ void GarbageCollection(unsigned int dieNo)
 					SelectLowLevelReqQ(reqSlotTag);
 
 					//write
+					global_flush_cnt += 1;
 					reqSlotTag = GetFromFreeReqQ();
 
 					reqPoolPtr->reqPool[reqSlotTag].reqType = REQ_TYPE_NAND;
@@ -155,7 +156,7 @@ unsigned int GetFromGcVictimList(unsigned int dieNo)
 	unsigned int evictedBlockNo;
 	int invalidSliceCnt;
 
-	for(invalidSliceCnt = SLICES_PER_BLOCK; invalidSliceCnt > 0 ; invalidSliceCnt--)         //InvalidSliceCnt=128
+	for(invalidSliceCnt = SLICES_PER_BLOCK; invalidSliceCnt > 0 ; invalidSliceCnt--)
 	{
 		if(gcVictimMapPtr->gcVictimList[dieNo][invalidSliceCnt].headBlock != BLOCK_NONE)
 		{
