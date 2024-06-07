@@ -92,7 +92,13 @@ void nvme_main()
 	unsigned int exeLlr;
 	unsigned int rstCnt = 0;
 	
-	trim_flag = 0;
+	trim_flag = 0;		//for get trim data
+	do_trim_flag = 0;	//for do idle_trim
+	trimming_flag = 0;
+	cmd_by_trim = 0;
+	nr_sum = 0;
+	trim_index = 0;
+	unsigned int i_time = 0;
 
 	xil_printf("!!! Wait until FTL reset complete !!! \r\n");
 
@@ -126,6 +132,7 @@ void nvme_main()
 
 			if(cmdValid == 1)
 			{
+				i_time = 0;
 				rstCnt = 0;
 				if(nvmeCmd.qID == 0)
 				{
@@ -138,6 +145,7 @@ void nvme_main()
 					exeLlr=0;
 				}
 			}
+			i_time += 1;
 
 	       	if (trim_flag == 1)
 		   	{
@@ -146,7 +154,6 @@ void nvme_main()
 						CheckDoneNvmeDmaReq();
 				}
 				GetTrimData();
-				DoTrim();
 			}
 		}
 		else if(g_nvmeTask.status == NVME_TASK_SHUTDOWN)
@@ -437,6 +444,7 @@ void nvme_main()
 			static unsigned int saved_notCompletedNandReqCnt, saved_blockedReqCnt;
 			static unsigned int check_cnt;
 #endif
+			i_time = 0;
 			CheckDoneNvmeDmaReq();
 			SchedulingNandReq();
 #if 0
@@ -463,7 +471,12 @@ void nvme_main()
 #endif
 #endif
 		}
-	}
+
+		if((do_trim_flag==1) && (i_time > 100000000))
+		{
+			trimming_flag = DoTrim();
+			//trimming_flag will be used to use delay write list
+		}
 }
 
 

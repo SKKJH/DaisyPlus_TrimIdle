@@ -7,18 +7,11 @@ void GetTrimData()
 {
 	trim_flag = 0;
 	unsigned int tempAddr = trimDevAddr;
-	//xil_printf("Get Trim Data\n");
-	//xil_printf("num of ranges : %d\r\n",nr);
-	for (int i=0; i<nr; i++)
+	for (int nr_sum=0; i<nr_sum+nr; i++)
 	{
 		unsigned int *ptr = (unsigned int*)tempAddr;
 		if (((*(ptr)<0)||(*(ptr)>0xfffffff0))||((*(ptr+1)<0)||(*(ptr+1)>0xfffffff0))||((*(ptr+2)< 0)||(*(ptr+2)>0xfffffff0))||((*(ptr+3)<0)||(*(ptr+3)>0xfffffff0)))
 		{
-//			xil_printf("ContextAttributess : %d\r\n",(*(ptr)));
-//			xil_printf("lengthInLogicalBlocks : %d\r\n",(*(ptr+1)));
-//			xil_printf("startingLBA[0] : %d\r\n",(*(ptr+2)));
-//			xil_printf("startingLBA[1] : %d\r\n",(*(ptr+3)));
-
 			dmRangePtr->dmRange[i].ContextAttributes.value = 0;
 			dmRangePtr->dmRange[i].lengthInLogicalBlocks = 1;
 			dmRangePtr->dmRange[i].startingLBA[0] = 0;
@@ -31,16 +24,17 @@ void GetTrimData()
 			dmRangePtr->dmRange[i].startingLBA[0] = *(ptr + 2);
 			dmRangePtr->dmRange[i].startingLBA[1] = *(ptr + 3);
 		}
-//		xil_printf("start lba : %d, length : %d\r\n",dmRangePtr->dmRange[i].startingLBA[0], dmRangePtr->dmRange[i].lengthInLogicalBlocks);
 		tempAddr += sizeof(unsigned int)*4;
 	}
+	nr_sum += nr;
+	do_trim_flag = 1;
 }
 
-void DoTrim()
+int DoTrim()
 {
 	int nlb, startLba, tempLsa, nvmeBlockOffset, BLK0, BLK1, BLK2, BLK3, tempLength, tempsLba;
 
-	for (int i=0; i<nr; i++)
+	for (int i=trim_index; i<nr_sum; i++)
 	{
 		nlb = dmRangePtr->dmRange[i].lengthInLogicalBlocks;
 		startLba = dmRangePtr->dmRange[i].startingLBA[0];
@@ -151,6 +145,15 @@ void DoTrim()
 			TRIM(tempLsa, 1, 1, 1, 1);
 			tempsLba += 4;
 			tempLength -= 4;
+
+			cmd_by_trim = check_nvme_cmd_come();
+			if(cmd_valid == 1)
+			{
+				dmRangePtr->dmRange[i].startingLBA[0] = tempsLba;
+				dmRangePtr->dmRange[i].lengthInLogicalBlocks = tempLength;
+				trim_index = i;
+				return 1;
+			}
 		}
 		tempLsa = tempsLba / NVME_BLOCKS_PER_SLICE;
 		if (tempLength == 3)
@@ -166,6 +169,10 @@ void DoTrim()
 			TRIM(tempLsa, 1, 0, 0, 0);
 		}
 	}
+
+	nr_sum = 0;
+	do_trim_flag = 0;
+	return 0;
 }
 
 

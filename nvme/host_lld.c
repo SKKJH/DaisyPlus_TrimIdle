@@ -174,6 +174,17 @@ void dev_irq_handler()
 //	Xil_ExceptionEnable();
 }
 
+unsigned int check_nvme_cmd_come()
+{
+	NVME_CMD_FIFO_REG nvmeReg;
+
+	nvmeReg.dword = IO_READ32(NVME_CMD_FIFO_REG_ADDR);
+
+	global_nvmeReg.dword = nvmeReg.dword;
+
+	return (unsigned int)nvmeReg.cmdValid;
+}
+
 unsigned int check_nvme_cc_en()
 {
 	NVME_STATUS_REG nvmeReg;
@@ -241,9 +252,15 @@ void set_nvme_admin_queue(unsigned int sqValid, unsigned int cqValid, unsigned i
 unsigned int get_nvme_cmd(unsigned short *qID, unsigned short *cmdSlotTag, unsigned int *cmdSeqNum, unsigned int *cmdDword)
 {
 	NVME_CMD_FIFO_REG nvmeReg;
-	
-	nvmeReg.dword = IO_READ32(NVME_CMD_FIFO_REG_ADDR);
-
+	if (cmd_by_trim == 1)
+	{
+		cmd_by_trim = 0;
+		nvmeReg.dword = global_nvmeReg.dword;
+	}
+	else
+	{
+		nvmeReg.dword = IO_READ32(NVME_CMD_FIFO_REG_ADDR);
+	}
 	if(nvmeReg.cmdValid == 1)
 	{
 		unsigned int addr;
