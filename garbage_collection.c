@@ -48,6 +48,7 @@
 #include "xil_printf.h"
 #include <assert.h>
 #include "memory_map.h"
+#include "trim.h"
 
 P_GC_VICTIM_MAP gcVictimMapPtr;
 
@@ -70,6 +71,12 @@ void InitGcVictimMap()
 
 void GarbageCollection(unsigned int dieNo)
 {
+
+	if(do_trim_flag==1)
+	{
+		trimming_flag = DoTrim(0);
+	}
+
 	//xil_printf("Activate GarbageCollection!!\r\n");
 	unsigned int victimBlockNo, pageNo, virtualSliceAddr, logicalSliceAddr, dieNoForGcCopy, reqSlotTag;
 

@@ -7,35 +7,54 @@ void GetTrimData()
 {
 	trim_flag = 0;
 	unsigned int tempAddr = trimDevAddr;
-	for (int nr_sum=0; i<nr_sum+nr; i++)
+	unsigned int tail = dmRangePtr->tail;
+	for (int i=tail; i<tail+nr; i++)
 	{
+		int j = i%3000;
 		unsigned int *ptr = (unsigned int*)tempAddr;
 		if (((*(ptr)<0)||(*(ptr)>0xfffffff0))||((*(ptr+1)<0)||(*(ptr+1)>0xfffffff0))||((*(ptr+2)< 0)||(*(ptr+2)>0xfffffff0))||((*(ptr+3)<0)||(*(ptr+3)>0xfffffff0)))
 		{
-			dmRangePtr->dmRange[i].ContextAttributes.value = 0;
-			dmRangePtr->dmRange[i].lengthInLogicalBlocks = 1;
-			dmRangePtr->dmRange[i].startingLBA[0] = 0;
-			dmRangePtr->dmRange[i].startingLBA[1] = 0;
+			dmRangePtr->dmRange[j].ContextAttributes.value = 0;
+			dmRangePtr->dmRange[j].lengthInLogicalBlocks = 1;
+			dmRangePtr->dmRange[j].startingLBA[0] = 0;
+			dmRangePtr->dmRange[j].startingLBA[1] = 0;
 		}
 		else
 		{
-			dmRangePtr->dmRange[i].ContextAttributes.value = *(ptr);
-			dmRangePtr->dmRange[i].lengthInLogicalBlocks = *(ptr+1);
-			dmRangePtr->dmRange[i].startingLBA[0] = *(ptr + 2);
-			dmRangePtr->dmRange[i].startingLBA[1] = *(ptr + 3);
+			dmRangePtr->dmRange[j].ContextAttributes.value = *(ptr);
+			dmRangePtr->dmRange[j].lengthInLogicalBlocks = *(ptr+1);
+			dmRangePtr->dmRange[j].startingLBA[0] = *(ptr + 2);
+			dmRangePtr->dmRange[j].startingLBA[1] = *(ptr + 3);
+		}
+		dmRangePtr->tail = dmRangePtr->tail + 1;
+		if(dmRangePtr->tail==dmRangePtr->head)
+		{
+			if(dmRangePtr->head==2999)
+			{
+				dmRangePtr->head = 0;
+			}
+			else
+			{
+				dmRangePtr->head += 1;
+			}
 		}
 		tempAddr += sizeof(unsigned int)*4;
+		xil_printf("[%d] startingLBA: %d, lengthInLogicalBlocks: %d\n", j, dmRangePtr->dmRange[j].startingLBA[0], dmRangePtr->dmRange[j].lengthInLogicalBlocks);
 	}
 	nr_sum += nr;
 	do_trim_flag = 1;
 }
 
-int DoTrim()
+int DoTrim(int forced)
 {
-	int nlb, startLba, tempLsa, nvmeBlockOffset, BLK0, BLK1, BLK2, BLK3, tempLength, tempsLba;
-
-	for (int i=trim_index; i<nr_sum; i++)
+	int nlb, startLba, tempLsa, nvmeBlockOffset, BLK0, BLK1, BLK2, BLK3, tempLength, tempsLba, temp_nr_sum;
+	temp_nr_sum = nr_sum;
+	xil_printf("Do Trim Start\r\n");
+	unsigned int head = dmRangePtr->head;
+	for (int l=0; l<temp_nr_sum; l++)
 	{
+		int i = head + l;
+		xil_printf("Do Trim [%d]\r\n", i);
 		nlb = dmRangePtr->dmRange[i].lengthInLogicalBlocks;
 		startLba = dmRangePtr->dmRange[i].startingLBA[0];
 		//xil_printf("nlb : %d, start lba : %d\r\n", nlb, startLba);
@@ -146,13 +165,16 @@ int DoTrim()
 			tempsLba += 4;
 			tempLength -= 4;
 
-			cmd_by_trim = check_nvme_cmd_come();
-			if(cmd_valid == 1)
+			if (forced == 1)
 			{
-				dmRangePtr->dmRange[i].startingLBA[0] = tempsLba;
-				dmRangePtr->dmRange[i].lengthInLogicalBlocks = tempLength;
-				trim_index = i;
-				return 1;
+			cmd_by_trim = check_nvme_cmd_come();
+				if(cmd_by_trim == 1)
+				{
+					dmRangePtr->dmRange[i].startingLBA[0] = tempsLba;
+					dmRangePtr->dmRange[i].lengthInLogicalBlocks = tempLength;
+					trim_index = i;
+					return 1;
+				}
 			}
 		}
 		tempLsa = tempsLba / NVME_BLOCKS_PER_SLICE;
@@ -168,16 +190,27 @@ int DoTrim()
 		{
 			TRIM(tempLsa, 1, 0, 0, 0);
 		}
+
+		if(dmRangePtr->head==2999)
+		{
+			dmRangePtr->head = 0;
+		}
+		else
+		{
+			dmRangePtr->head += 1;
+		}
+		nr_sum -= 1;
 	}
 
 	nr_sum = 0;
 	do_trim_flag = 0;
+	dmRangePtr->head = 0;
+	dmRangePtr->tail = 0;
 	return 0;
 }
 
-
 void TRIM(unsigned int LPN, unsigned int BLK0, unsigned int BLK1, unsigned int BLK2, unsigned int BLK3) {
-    //xil_printf("LPN : %d, BIT : %d%d%d%d\n",LPN, BLK0, BLK1, BLK2, BLK3);
+    xil_printf("LPN : %d, BIT : %d%d%d%d\n",LPN, BLK0, BLK1, BLK2, BLK3);
     unsigned int bufEntry = CheckDataBufHitByLSA(LPN);
     if (bufEntry != DATA_BUF_FAIL) {
     	//xil_printf("Buffer Hit with LPN: %d\r\n!!",LPN);

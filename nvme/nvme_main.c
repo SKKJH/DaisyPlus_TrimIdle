@@ -145,8 +145,10 @@ void nvme_main()
 					exeLlr=0;
 				}
 			}
-			i_time += 1;
-
+			if(do_trim_flag == 1)
+			{
+				i_time += 1;
+			}
 	       	if (trim_flag == 1)
 		   	{
 				while(nvmeDmaReqQ.headReq != REQ_SLOT_TAG_NONE)
@@ -233,8 +235,6 @@ void nvme_main()
 
 			xil_printf("\r\nNVMe reset!!!\r\n");
 		}
-
-
 
 #ifdef NAND_STANDALONE_TEST
         {
@@ -472,11 +472,17 @@ void nvme_main()
 #endif
 		}
 
-		if((do_trim_flag==1) && (i_time > 100000000))
+		if(do_trim_flag==1)
 		{
-			trimming_flag = DoTrim();
+			xil_printf("idle_time: %d\n",i_time);
+		}
+		//100000000
+		if((do_trim_flag==1) && (i_time > 10000))
+		{
+			trimming_flag = DoTrim(1);
 			//trimming_flag will be used to use delay write list
 		}
+	}
 }
 
 

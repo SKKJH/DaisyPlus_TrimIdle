@@ -812,9 +812,10 @@ typedef struct _DATASET_MANAGEMENT_RANGE
 
 typedef struct _DSM_RANGE{
 	DATASET_MANAGEMENT_RANGE dmRange[3000];
+	unsigned int tail;
+	unsigned int head;
 } DSM_RANGE, *P_DSM_RANGE;
 #pragma pack(pop)
-
 
 typedef struct _NVME_ADMIN_QUEUE_STATUS
 {

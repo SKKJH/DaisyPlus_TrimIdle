@@ -91,6 +91,8 @@ void InitDataBuf()
 		dmRangePtr->dmRange[bufEntry].startingLBA[0] = 0xffff;
 		dmRangePtr->dmRange[bufEntry].startingLBA[1] = 0xffff;
 	}
+	dmRangePtr->head = 0;
+	dmRangePtr->tail = 0;
 	// ~Delayed Write Buffer & Trim Range Entry
 
 	dataBufMapPtr->dataBuf[0].prevEntry = DATA_BUF_NONE;

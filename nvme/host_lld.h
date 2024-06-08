@@ -178,7 +178,7 @@ typedef struct _NVME_CMD_FIFO_REG
 	};
 } NVME_CMD_FIFO_REG;
 
-struct NVME_CMD_FIFO_REG global_nvmeReg;
+NVME_CMD_FIFO_REG global_nvmeReg;
 
 //offset: 0x00000304, size: 8
 typedef struct _NVME_CPL_FIFO_REG

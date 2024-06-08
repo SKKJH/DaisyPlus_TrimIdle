@@ -55,6 +55,7 @@
 #include "xil_printf.h"
 #include "debug.h"
 #include "io_access.h"
+#include "../trim.h"
 
 #include "nvme.h"
 #include "host_lld.h"
