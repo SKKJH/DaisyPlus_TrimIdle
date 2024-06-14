@@ -472,12 +472,7 @@ void nvme_main()
 #endif
 		}
 
-		if(do_trim_flag==1)
-		{
-			xil_printf("idle_time: %d\n",i_time);
-		}
-		//100000000
-		if((do_trim_flag==1) && (i_time > 10000))
+		if((do_trim_flag==1) && (i_time > 10000000))
 		{
 			trimming_flag = DoTrim(1);
 			//trimming_flag will be used to use delay write list

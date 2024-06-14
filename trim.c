@@ -3,6 +3,8 @@
 #include "request_allocation.h"
 #include "address_translation.h"
 
+//build bmap for trim
+
 void GetTrimData()
 {
 	trim_flag = 0;
@@ -39,7 +41,7 @@ void GetTrimData()
 			}
 		}
 		tempAddr += sizeof(unsigned int)*4;
-		xil_printf("[%d] startingLBA: %d, lengthInLogicalBlocks: %d\n", j, dmRangePtr->dmRange[j].startingLBA[0], dmRangePtr->dmRange[j].lengthInLogicalBlocks);
+		//xil_printf("[%d] startingLBA: %d, lengthInLogicalBlocks: %d\n", j, dmRangePtr->dmRange[j].startingLBA[0], dmRangePtr->dmRange[j].lengthInLogicalBlocks);
 	}
 	nr_sum += nr;
 	do_trim_flag = 1;
@@ -49,12 +51,10 @@ int DoTrim(int forced)
 {
 	int nlb, startLba, tempLsa, nvmeBlockOffset, BLK0, BLK1, BLK2, BLK3, tempLength, tempsLba, temp_nr_sum;
 	temp_nr_sum = nr_sum;
-	xil_printf("Do Trim Start\r\n");
 	unsigned int head = dmRangePtr->head;
 	for (int l=0; l<temp_nr_sum; l++)
 	{
 		int i = head + l;
-		xil_printf("Do Trim [%d]\r\n", i);
 		nlb = dmRangePtr->dmRange[i].lengthInLogicalBlocks;
 		startLba = dmRangePtr->dmRange[i].startingLBA[0];
 		//xil_printf("nlb : %d, start lba : %d\r\n", nlb, startLba);
@@ -167,7 +167,7 @@ int DoTrim(int forced)
 
 			if (forced == 1)
 			{
-			cmd_by_trim = check_nvme_cmd_come();
+				cmd_by_trim = check_nvme_cmd_come();
 				if(cmd_by_trim == 1)
 				{
 					dmRangePtr->dmRange[i].startingLBA[0] = tempsLba;
@@ -210,7 +210,7 @@ int DoTrim(int forced)
 }
 
 void TRIM(unsigned int LPN, unsigned int BLK0, unsigned int BLK1, unsigned int BLK2, unsigned int BLK3) {
-    xil_printf("LPN : %d, BIT : %d%d%d%d\n",LPN, BLK0, BLK1, BLK2, BLK3);
+    //xil_printf("LPN : %d, BIT : %d%d%d%d\n",LPN, BLK0, BLK1, BLK2, BLK3);
     unsigned int bufEntry = CheckDataBufHitByLSA(LPN);
     if (bufEntry != DATA_BUF_FAIL) {
     	//xil_printf("Buffer Hit with LPN: %d\r\n!!",LPN);
