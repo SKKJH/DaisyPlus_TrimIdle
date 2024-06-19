@@ -71,7 +71,7 @@ BAD_BLOCK_MARK_PAGE0	ftl_config.h	119;"	d
 BAD_BLOCK_MARK_PAGE1	ftl_config.h	120;"	d
 BAD_BLOCK_TABLE_INFO_ENTRY	address_translation.h	/^} BAD_BLOCK_TABLE_INFO_ENTRY, *P_BAD_BLOCK_TABLE_ENTRY;$/;"	t	typeref:struct:_BAD_BLOCK_TABLE_INFO_ENTRY
 BAD_BLOCK_TABLE_INFO_MAP	address_translation.h	/^} BAD_BLOCK_TABLE_INFO_MAP, *P_BAD_BLOCK_TABLE_INFO_MAP;$/;"	t	typeref:struct:_BAD_BLOCK_TABLE_INFO_MAP
-BAD_BLOCK_TABLE_INFO_MAP_ADDR	memory_map.h	95;"	d
+BAD_BLOCK_TABLE_INFO_MAP_ADDR	memory_map.h	96;"	d
 BAD_BLOCK_TABLE_MAKER_IDLE	address_translation.h	78;"	d
 BAD_BLOCK_TABLE_MAKER_TRIGGER	address_translation.h	79;"	d
 BBT_INFO_GROWN_BAD_UPDATE_BOOKED	address_translation.h	90;"	d
@@ -146,19 +146,19 @@ DIE_STATE_ENTRY	request_schedule.h	/^} DIE_STATE_ENTRY, *P_DIE_STATE_ENTRY;$/;"	
 DIE_STATE_EXE	request_schedule.h	63;"	d
 DIE_STATE_IDLE	request_schedule.h	62;"	d
 DIE_STATE_TABLE	request_schedule.h	/^} DIE_STATE_TABLE, *P_DIE_STATE_TABLE;$/;"	t	typeref:struct:_DIE_STATE_TABLE
-DIE_STATE_TABLE_ADDR	memory_map.h	104;"	d
+DIE_STATE_TABLE_ADDR	memory_map.h	105;"	d
 DNR	nvme/host_lld.h	/^					unsigned short DNR			:1;\/\/Do Not Retry$/;"	m	struct:_NVME_CPL_FIFO_REG::__anon124::__anon125::__anon127::__anon128
 DNR	nvme/nvme.h	/^					unsigned short DNR				:1;$/;"	m	struct:_NVME_COMPLETION::__anon51::__anon52::__anon53::__anon54
 DPC	nvme/nvme.h	/^	} DPC;$/;"	m	struct:_ADMIN_IDENTIFY_NAMESPACE	typeref:struct:_ADMIN_IDENTIFY_NAMESPACE::__anon96
 DPS	nvme/nvme.h	/^	} DPS;$/;"	m	struct:_ADMIN_IDENTIFY_NAMESPACE	typeref:struct:_ADMIN_IDENTIFY_NAMESPACE::__anon97
-DRAM_END_ADDR	memory_map.h	113;"	d
+DRAM_END_ADDR	memory_map.h	114;"	d
 DRAM_START_ADDR	memory_map.h	57;"	d
 DSM	nvme/nvme.h	/^			} DSM;$/;"	m	struct:_IO_READ_COMMAND_DW13::__anon109::__anon110	typeref:struct:_IO_READ_COMMAND_DW13::__anon109::__anon110::__anon111
 DSM	nvme/nvme.h	/^			} DSM;$/;"	m	struct:_IO_WRITE_COMMAND_DW13::__anon102::__anon103	typeref:struct:_IO_WRITE_COMMAND_DW13::__anon102::__anon103::__anon104
 DSMRangeUnion	nvme/nvme.h	/^} DSMRangeUnion;$/;"	t	typeref:union:_DSMRangeUnion
 DSM_RANGE	nvme/nvme.h	/^} DSM_RANGE, *P_DSM_RANGE;$/;"	t	typeref:struct:_DSM_RANGE
 DSM_RANGE_ADDR	memory_map.h	88;"	d
-DUMMY_RD_WR_ADDR	memory_map.h	115;"	d
+DUMMY_RD_WR_ADDR	memory_map.h	116;"	d
 DataReadFromNand	request_transform.c	/^void DataReadFromNand(unsigned int originReqSlotTag)$/;"	f
 DoTrim	trim.c	/^int DoTrim(int forced)$/;"	f
 ECC_CHUNKS_PER_PAGE	ftl_config.h	143;"	d
@@ -194,7 +194,7 @@ FREE_REQUEST_QUEUE	request_queue.h	/^} FREE_REQUEST_QUEUE, *P_FREE_REQUEST_QUEUE
 FRMW	nvme/nvme.h	/^	} FRMW;$/;"	m	struct:_ADMIN_IDENTIFY_CONTROLLER	typeref:struct:_ADMIN_IDENTIFY_CONTROLLER::__anon84
 FRRE_BLOCK_ALLOCATION_LIST	address_translation.h	/^} FRRE_BLOCK_ALLOCATION_LIST, *P_FRRE_BLOCK_ALLOCATION_LIST;$/;"	t	typeref:struct:_FRRE_BLOCK_ALLOCATION_LIST
 FTL_CONFIG_H_	ftl_config.h	48;"	d
-FTL_MANAGEMENT_END_ADDR	memory_map.h	108;"	d
+FTL_MANAGEMENT_END_ADDR	memory_map.h	109;"	d
 FTL_MANAGEMENT_START_ADDR	memory_map.h	68;"	d
 FUA	nvme/nvme.h	/^			unsigned short FUA						:1;$/;"	m	struct:_IO_READ_COMMAND_DW12::__anon107::__anon108
 FUA	nvme/nvme.h	/^			unsigned short FUA						:1;$/;"	m	struct:_IO_WRITE_COMMAND_DW12::__anon100::__anon101
@@ -209,7 +209,7 @@ FindFreeVirtualSliceForGc	address_translation.c	/^unsigned int FindFreeVirtualSl
 GARBAGE_COLLECTION_H_	garbage_collection.h	48;"	d
 GC_VICTIM_LIST_ENTRY	garbage_collection.h	/^} GC_VICTIM_LIST_ENTRY, *P_GC_VICTIM_LIST_ENTRY;$/;"	t	typeref:struct:_GC_VICTIM_LIST_ENTRY
 GC_VICTIM_MAP	garbage_collection.h	/^} GC_VICTIM_MAP, *P_GC_VICTIM_MAP;$/;"	t	typeref:struct:_GC_VICTIM_MAP
-GC_VICTIM_MAP_ADDR	memory_map.h	98;"	d
+GC_VICTIM_MAP_ADDR	memory_map.h	99;"	d
 GET_FREE_BLOCK_GC	address_translation.h	70;"	d
 GET_FREE_BLOCK_NORMAL	address_translation.h	69;"	d
 GarbageCollection	garbage_collection.c	/^void GarbageCollection(unsigned int dieNo)$/;"	f
@@ -283,7 +283,7 @@ LOGICAL_SLICE_ADDR_DSM	request_format.h	103;"	d
 LOGICAL_SLICE_ADDR_NONE	request_format.h	102;"	d
 LOGICAL_SLICE_ENTRY	address_translation.h	/^} LOGICAL_SLICE_ENTRY, *P_LOGICAL_SLICE_ENTRY;$/;"	t	typeref:struct:_LOGICAL_SLICE_ENTRY
 LOGICAL_SLICE_MAP	address_translation.h	/^} LOGICAL_SLICE_MAP, *P_LOGICAL_SLICE_MAP;$/;"	t	typeref:struct:_LOGICAL_SLICE_MAP
-LOGICAL_SLICE_MAP_ADDR	memory_map.h	91;"	d
+LOGICAL_SLICE_MAP_ADDR	memory_map.h	92;"	d
 LPA	nvme/nvme.h	/^	} LPA;$/;"	m	struct:_ADMIN_IDENTIFY_CONTROLLER	typeref:struct:_ADMIN_IDENTIFY_CONTROLLER::__anon85
 LR	nvme/nvme.h	/^			unsigned short LR						:1;$/;"	m	struct:_IO_READ_COMMAND_DW12::__anon107::__anon108
 LR	nvme/nvme.h	/^			unsigned short LR						:1;$/;"	m	struct:_IO_WRITE_COMMAND_DW12::__anon100::__anon101
@@ -434,7 +434,7 @@ PCI_SUBSYSTEM_VENDOR_ID	nvme/nvme_identify.h	53;"	d
 PCI_VENDOR_ID	nvme/nvme_identify.h	52;"	d
 PHY_BLOCK_ENTRY	address_translation.h	/^} PHY_BLOCK_ENTRY, *P_PHY_BLOCK_ENTRY;$/;"	t	typeref:struct:_PHY_BLOCK_ENTRY
 PHY_BLOCK_MAP	address_translation.h	/^} PHY_BLOCK_MAP, *P_PHY_BLOCK_MAP;$/;"	t	typeref:struct:_PHY_BLOCK_MAP
-PHY_BLOCK_MAP_ADDR	memory_map.h	94;"	d
+PHY_BLOCK_MAP_ADDR	memory_map.h	95;"	d
 POWER_MANAGEMENT	nvme/nvme.h	182;"	d
 POWER_STATE_TRANSITION	nvme/nvme.h	192;"	d
 PRINFO	nvme/nvme.h	/^			unsigned short PRINFO					:4;$/;"	m	struct:_IO_READ_COMMAND_DW12::__anon107::__anon108
@@ -486,6 +486,7 @@ P_SSD_REQ_FORMAT	request_format.h	/^} SSD_REQ_FORMAT, *P_SSD_REQ_FORMAT;$/;"	t	t
 P_STATUS_REPORT_TABLE	request_schedule.h	/^} STATUS_REPORT_TABLE, *P_STATUS_REPORT_TABLE;$/;"	t	typeref:struct:_STATUS_REPORT_TABLE
 P_TEMPORARY_DATA_BUF_ENTRY	data_buffer.h	/^} TEMPORARY_DATA_BUF_ENTRY, *P_TEMPORARY_DATA_BUF_ENTRY;$/;"	t	typeref:struct:_TEMPORARY_DATA_BUF_ENTRY
 P_TEMPORARY_DATA_BUF_MAP	data_buffer.h	/^} TEMPORARY_DATA_BUF_MAP, *P_TEMPORARY_DATA_BUF_MAP;$/;"	t	typeref:struct:_TEMPORARY_DATA_BUF_MAP
+P_TRIM_VALID_BIT_MAP	address_translation.h	/^} TRIM_VALID_BIT_MAP, *P_TRIM_VALID_BIT_MAP;$/;"	t	typeref:struct:_TRIM_VALID_BIT_MAP
 P_VIRTUAL_BLOCK_ENTRY	address_translation.h	/^} VIRTUAL_BLOCK_ENTRY, *P_VIRTUAL_BLOCK_ENTRY;$/;"	t	typeref:struct:_VIRTUAL_BLOCK_ENTRY
 P_VIRTUAL_BLOCK_MAP	address_translation.h	/^} VIRTUAL_BLOCK_MAP, *P_VIRTUAL_BLOCK_MAP;$/;"	t	typeref:struct:_VIRTUAL_BLOCK_MAP
 P_VIRTUAL_DIE_ENTRY	address_translation.h	/^} VIRTUAL_DIE_ENTRY, *P_VIRTUAL_DIE_ENTRY;$/;"	t	typeref:struct:_VIRTUAL_DIE_ENTRY
@@ -557,7 +558,7 @@ REQ_OPT_ROW_ADDR_DEPENDENCY_NONE	request_format.h	96;"	d
 REQ_OPT_WRAPPING_NONE	request_format.h	93;"	d
 REQ_OPT_WRAPPING_REQ	request_format.h	94;"	d
 REQ_POOL	request_allocation.h	/^} REQ_POOL, *P_REQ_POOL;$/;"	t	typeref:struct:_REQ_POOL
-REQ_POOL_ADDR	memory_map.h	100;"	d
+REQ_POOL_ADDR	memory_map.h	101;"	d
 REQ_QUEUE_TYPE_BLOCKED_BY_BUF_DEP	request_format.h	58;"	d
 REQ_QUEUE_TYPE_BLOCKED_BY_ROW_ADDR_DEP	request_format.h	59;"	d
 REQ_QUEUE_TYPE_FREE	request_format.h	56;"	d
@@ -581,13 +582,13 @@ REQ_TYPE_SLICE	request_format.h	51;"	d
 RESCAP	nvme/nvme.h	/^	} RESCAP;$/;"	m	struct:_ADMIN_IDENTIFY_NAMESPACE	typeref:struct:_ADMIN_IDENTIFY_NAMESPACE::__anon99
 RESERVED0_END_ADDR	memory_map.h	66;"	d
 RESERVED0_START_ADDR	memory_map.h	65;"	d
-RESERVED1_END_ADDR	memory_map.h	111;"	d
-RESERVED1_START_ADDR	memory_map.h	110;"	d
+RESERVED1_END_ADDR	memory_map.h	112;"	d
+RESERVED1_START_ADDR	memory_map.h	111;"	d
 RESERVED_DATA_BUFFER_BASE_ADDR	memory_map.h	75;"	d
 RESERVED_FREE_BLOCK_COUNT	address_translation.h	67;"	d
 RETRY_LIMIT	request_schedule.h	60;"	d
 RETRY_LIMIT_TABLE	request_schedule.h	/^} RETRY_LIMIT_TABLE, *P_RETRY_LIMIT_TABLE;$/;"	t	typeref:struct:_RETRY_LIMIT_TABLE
-RETRY_LIMIT_TABLE_ADDR	memory_map.h	105;"	d
+RETRY_LIMIT_TABLE_ADDR	memory_map.h	106;"	d
 ROWS_PER_MLC_BLOCK	ftl_config.h	105;"	d
 ROWS_PER_SLC_BLOCK	ftl_config.h	104;"	d
 ROW_ADDR_DEPENDENCY_CHECK_OPT_RELEASE	request_transform.h	56;"	d
@@ -596,7 +597,7 @@ ROW_ADDR_DEPENDENCY_ENTRY	request_transform.h	/^} ROW_ADDR_DEPENDENCY_ENTRY, *P_
 ROW_ADDR_DEPENDENCY_REPORT_BLOCKED	request_transform.h	61;"	d
 ROW_ADDR_DEPENDENCY_REPORT_PASS	request_transform.h	62;"	d
 ROW_ADDR_DEPENDENCY_TABLE	request_transform.h	/^} ROW_ADDR_DEPENDENCY_TABLE, *P_ROW_ADDR_DEPENDENCY_TABLE;$/;"	t	typeref:struct:_ROW_ADDR_DEPENDENCY_TABLE
-ROW_ADDR_DEPENDENCY_TABLE_ADDR	memory_map.h	102;"	d
+ROW_ADDR_DEPENDENCY_TABLE_ADDR	memory_map.h	103;"	d
 ROW_ADDR_DEPENDENCY_TABLE_UPDATE_REPORT_DONE	request_transform.h	64;"	d
 ROW_ADDR_DEPENDENCY_TABLE_UPDATE_REPORT_SYNC	request_transform.h	65;"	d
 RP	nvme/nvme.h	/^	unsigned char RP				:2;$/;"	m	struct:_ADMIN_IDENTIFY_FORMAT_DATA
@@ -835,6 +836,8 @@ TIMESTAMP	nvme/nvme.h	193;"	d
 TOTAL_BLOCKS_PER_DIE	ftl_config.h	117;"	d
 TOTAL_BLOCKS_PER_LUN	ftl_config.h	109;"	d
 TRIM	trim.c	/^void TRIM(unsigned int LPN, unsigned int BLK0, unsigned int BLK1, unsigned int BLK2, unsigned int BLK3) {$/;"	f
+TRIM_VALID_BIT_MAP	address_translation.h	/^} TRIM_VALID_BIT_MAP, *P_TRIM_VALID_BIT_MAP;$/;"	t	typeref:struct:_TRIM_VALID_BIT_MAP
+TRIM_VALID_BIT_MAP_ADDR	memory_map.h	89;"	d
 USED_PAGES_FOR_BAD_BLOCK_TABLE_PER_DIE	address_translation.h	85;"	d
 USER_BLOCKS_PER_CHANNEL	ftl_config.h	195;"	d
 USER_BLOCKS_PER_DIE	ftl_config.h	194;"	d
@@ -888,13 +891,13 @@ V2FWorstChunkErrorCount	nsc_driver.h	105;"	d
 VID	nvme/nvme.h	/^	unsigned short VID;$/;"	m	struct:_ADMIN_IDENTIFY_CONTROLLER
 VIRTUAL_BLOCK_ENTRY	address_translation.h	/^} VIRTUAL_BLOCK_ENTRY, *P_VIRTUAL_BLOCK_ENTRY;$/;"	t	typeref:struct:_VIRTUAL_BLOCK_ENTRY
 VIRTUAL_BLOCK_MAP	address_translation.h	/^} VIRTUAL_BLOCK_MAP, *P_VIRTUAL_BLOCK_MAP;$/;"	t	typeref:struct:_VIRTUAL_BLOCK_MAP
-VIRTUAL_BLOCK_MAP_ADDR	memory_map.h	93;"	d
+VIRTUAL_BLOCK_MAP_ADDR	memory_map.h	94;"	d
 VIRTUAL_DIE_ENTRY	address_translation.h	/^} VIRTUAL_DIE_ENTRY, *P_VIRTUAL_DIE_ENTRY;$/;"	t	typeref:struct:_VIRTUAL_DIE_ENTRY
 VIRTUAL_DIE_MAP	address_translation.h	/^} VIRTUAL_DIE_MAP, *P_VIRTUAL_DIE_MAP;$/;"	t	typeref:struct:_VIRTUAL_DIE_MAP
-VIRTUAL_DIE_MAP_ADDR	memory_map.h	96;"	d
+VIRTUAL_DIE_MAP_ADDR	memory_map.h	97;"	d
 VIRTUAL_SLICE_ENTRY	address_translation.h	/^} VIRTUAL_SLICE_ENTRY, *P_VIRTUAL_SLICE_ENTRY;$/;"	t	typeref:struct:_VIRTUAL_SLICE_ENTRY
 VIRTUAL_SLICE_MAP	address_translation.h	/^} VIRTUAL_SLICE_MAP, *P_VIRTUAL_SLICE_MAP;$/;"	t	typeref:struct:_VIRTUAL_SLICE_MAP
-VIRTUAL_SLICE_MAP_ADDR	memory_map.h	92;"	d
+VIRTUAL_SLICE_MAP_ADDR	memory_map.h	93;"	d
 VOLATILE_WRITE_CACHE	nvme/nvme.h	186;"	d
 VS	nvme/nvme.h	/^	unsigned char VS[1024];$/;"	m	struct:_ADMIN_IDENTIFY_CONTROLLER
 VS	nvme/nvme.h	/^	unsigned char VS[3712];$/;"	m	struct:_ADMIN_IDENTIFY_NAMESPACE
@@ -913,7 +916,7 @@ Vsa2VpageTranslation	address_translation.h	95;"	d
 WAY_NONE	request_schedule.h	53;"	d
 WAY_PRIORITY_ENTRY	request_schedule.h	/^} WAY_PRIORITY_ENTRY, *P_WAY_PRIORITY_ENTRY;$/;"	t	typeref:struct:_WAY_PRIORITY_ENTRY
 WAY_PRIORITY_TABLE	request_schedule.h	/^} WAY_PRIORITY_TABLE, *P_WAY_PRIORITY_TABLE;$/;"	t	typeref:struct:_WAY_PRIORITY_TABLE
-WAY_PRIORITY_TABLE_ADDR	memory_map.h	106;"	d
+WAY_PRIORITY_TABLE_ADDR	memory_map.h	107;"	d
 WP	nvme/nvme.h	/^	unsigned int WP							:1;$/;"	m	struct:_DATASET_MANAGEMENT_CONTEXT_ATTRIBUTES
 WRITE_ATOMICITY	nvme/nvme.h	190;"	d
 _ADMIN_CREATE_IO_CQ_DW10	nvme/nvme.h	/^typedef struct _ADMIN_CREATE_IO_CQ_DW10$/;"	s
@@ -1006,6 +1009,7 @@ _SSD_REQ_FORMAT	request_format.h	/^typedef struct _SSD_REQ_FORMAT$/;"	s
 _STATUS_REPORT_TABLE	request_schedule.h	/^typedef struct _STATUS_REPORT_TABLE {$/;"	s
 _TEMPORARY_DATA_BUF_ENTRY	data_buffer.h	/^typedef struct _TEMPORARY_DATA_BUF_ENTRY {$/;"	s
 _TEMPORARY_DATA_BUF_MAP	data_buffer.h	/^typedef struct _TEMPORARY_DATA_BUF_MAP{$/;"	s
+_TRIM_VALID_BIT_MAP	address_translation.h	/^typedef struct _TRIM_VALID_BIT_MAP{$/;"	s
 _VIRTUAL_BLOCK_ENTRY	address_translation.h	/^typedef struct _VIRTUAL_BLOCK_ENTRY {$/;"	s
 _VIRTUAL_BLOCK_MAP	address_translation.h	/^typedef struct _VIRTUAL_BLOCK_MAP {$/;"	s
 _VIRTUAL_DIE_ENTRY	address_translation.h	/^typedef struct _VIRTUAL_DIE_ENTRY {$/;"	s
@@ -1673,6 +1677,7 @@ tempDataBuf	data_buffer.h	/^	TEMPORARY_DATA_BUF_ENTRY tempDataBuf[AVAILABLE_TEMP
 tempDataBufMapPtr	data_buffer.c	/^P_TEMPORARY_DATA_BUF_MAP tempDataBufMapPtr;$/;"	v
 totalErrorCount	nsc_driver.h	/^	unsigned int totalErrorCount:8;$/;"	m	struct:__anon38
 trimDevAddr	trim.h	/^unsigned int nr, trimDevAddr;$/;"	v
+trimValidBitMapPtr	address_translation.c	/^P_TRIM_VALID_BIT_MAP trimValidBitMapPtr;$/;"	v
 trim_flag	trim.h	/^unsigned int trim_flag, do_trim_flag, trimming_flag, cmd_by_trim;$/;"	v
 trim_index	trim.h	/^unsigned int trim_index;$/;"	v
 trimming_flag	trim.h	/^unsigned int trim_flag, do_trim_flag, trimming_flag, cmd_by_trim;$/;"	v
@@ -1681,6 +1686,7 @@ valid	nvme/host_lld.h	/^			unsigned int valid				:1;$/;"	m	struct:_NVME_IO_CQ_SE
 valid	nvme/host_lld.h	/^			unsigned int valid				:1;$/;"	m	struct:_NVME_IO_SQ_SET_REG::__anon131::__anon132
 valid	nvme/nvme.h	/^	unsigned char valid;$/;"	m	struct:_NVME_IO_CQ_STATUS
 valid	nvme/nvme.h	/^	unsigned char valid;$/;"	m	struct:_NVME_IO_SQ_STATUS
+valid_bit_map	address_translation.h	/^	unsigned char valid_bit_map[USER_PAGES_PER_SSD \/ 8];$/;"	m	struct:_TRIM_VALID_BIT_MAP
 value	nvme/nvme.h	/^	unsigned int value;$/;"	m	union:_DSMRangeUnion
 version	nsc_driver.h	/^	unsigned int version:31;$/;"	m	struct:__anon2
 virtualBlockMapPtr	address_translation.c	/^P_VIRTUAL_BLOCK_MAP virtualBlockMapPtr;$/;"	v

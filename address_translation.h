@@ -178,6 +178,12 @@ typedef struct _BAD_BLOCK_TABLE_INFO_MAP{
 	BAD_BLOCK_TABLE_INFO_ENTRY bbtInfo[USER_DIES];
 } BAD_BLOCK_TABLE_INFO_MAP, *P_BAD_BLOCK_TABLE_INFO_MAP;
 
+
+//P_TRIM_VALID_BIT_MAP trimValidBitMapPtr
+typedef struct _TRIM_VALID_BIT_MAP{
+	unsigned long long valid_bit_map[USER_PAGES_PER_SSD / 64];
+} TRIM_VALID_BIT_MAP, *P_TRIM_VALID_BIT_MAP;
+
 typedef struct _PHY_BLOCK_ENTRY {
 	unsigned int remappedPhyBlock : 16;
 	unsigned int bad :1;

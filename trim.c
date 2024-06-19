@@ -27,6 +27,15 @@ void GetTrimData()
 			dmRangePtr->dmRange[j].lengthInLogicalBlocks = *(ptr+1);
 			dmRangePtr->dmRange[j].startingLBA[0] = *(ptr + 2);
 			dmRangePtr->dmRange[j].startingLBA[1] = *(ptr + 3);
+			
+			int sLPN = dmRangePtr->dmRange[j].startingLBA[0] / 4;
+			int length = dmRangePtr->dmRange[j].lengthInLogicalBlocks / 4 + 1;
+			
+			for (int j=sLPN; j<sLPN+length; j++)
+			{
+				trimValidBitMapPtr->valid_bit_map[sLPN/64] |= (1ULL << (j % 64));
+			}
+
 		}
 		dmRangePtr->tail = dmRangePtr->tail + 1;
 		if(dmRangePtr->tail==dmRangePtr->head)
@@ -210,6 +219,8 @@ int DoTrim(int forced)
 }
 
 void TRIM(unsigned int LPN, unsigned int BLK0, unsigned int BLK1, unsigned int BLK2, unsigned int BLK3) {
+	if (trimValidBitMapPtr->valid_bit_map[LPN / 64] & (1ULL << (page % 64)))
+	{
     //xil_printf("LPN : %d, BIT : %d%d%d%d\n",LPN, BLK0, BLK1, BLK2, BLK3);
     unsigned int bufEntry = CheckDataBufHitByLSA(LPN);
     if (bufEntry != DATA_BUF_FAIL) {
@@ -286,5 +297,6 @@ void TRIM(unsigned int LPN, unsigned int BLK0, unsigned int BLK1, unsigned int B
             InvalidateOldVsa(LPN);
         }
     }
+	}
 }
 

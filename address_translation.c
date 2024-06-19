@@ -56,9 +56,10 @@ P_VIRTUAL_DIE_MAP virtualDieMapPtr;
 P_PHY_BLOCK_MAP phyBlockMapPtr;
 P_BAD_BLOCK_TABLE_INFO_MAP bbtInfoMapPtr;
 
+P_TRIM_VALID_BIT_MAP trimValidBitMapPtr;
+
 unsigned char sliceAllocationTargetDie;
 unsigned int mbPerbadBlockSpace;
-
 
 void InitAddressMap()
 {
@@ -70,6 +71,8 @@ void InitAddressMap()
 	virtualDieMapPtr = (P_VIRTUAL_DIE_MAP) VIRTUAL_DIE_MAP_ADDR;
 	phyBlockMapPtr = (P_PHY_BLOCK_MAP) PHY_BLOCK_MAP_ADDR;
 	bbtInfoMapPtr = (P_BAD_BLOCK_TABLE_INFO_MAP) BAD_BLOCK_TABLE_INFO_MAP_ADDR;
+
+	trimValidBitMapPtr = (P_TRIM_VALID_BIT_MAP) TRIM_VALID_BIT_MAP_ADDR;
 
 	//init phyblockMap
 	for(dieNo=0 ; dieNo<USER_DIES ; dieNo++)
@@ -85,6 +88,11 @@ void InitAddressMap()
 
 	InitSliceMap();
 	InitBlockDieMap();
+
+	for (int i = 0; i < (USER_PAGES_PER_SSD / 8); ++i) {
+        trimValidBitMapPtr->valid_bit_map[i] = 0;
+    }
+
 }
 
 void InitSliceMap()
