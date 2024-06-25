@@ -71,6 +71,7 @@ void InitGcVictimMap()
 
 void GarbageCollection(unsigned int dieNo)
 {
+//	XTime_GetTime(&writeStart);
 
 	if(do_trim_flag==1)
 	{
@@ -137,6 +138,9 @@ void GarbageCollection(unsigned int dieNo)
 	}
 
 	EraseBlock(dieNo, victimBlockNo);
+
+//	XTime_GetTime(&writeEnd);
+//	writeTime += writeEnd - writeStart;
 }
 
 

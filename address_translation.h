@@ -221,6 +221,7 @@ extern P_VIRTUAL_BLOCK_MAP virtualBlockMapPtr;
 extern P_VIRTUAL_DIE_MAP virtualDieMapPtr;
 extern P_PHY_BLOCK_MAP phyBlockMapPtr;
 extern P_BAD_BLOCK_TABLE_INFO_MAP bbtInfoMapPtr;
+extern P_TRIM_VALID_BIT_MAP trimValidBitMapPtr;
 
 extern unsigned char sliceAllocationTargetDie;
 extern unsigned int mbPerbadBlockSpace;

@@ -107,7 +107,7 @@ typedef struct _TEMPORARY_DATA_BUF_MAP{
 void InitDataBuf();
 unsigned int CheckDataBufHit(unsigned int reqSlotTag);
 unsigned int CheckDataBufHitByLSA(unsigned int logicalSliceAddr);
-unsigned int AllocateDataBuf();
+unsigned int AllocateDataBuf(unsigned flag);
 void UpdateDataBufEntryInfoBlockingReq(unsigned int bufEntry, unsigned int reqSlotTag);
 
 unsigned int AllocateTempDataBuf(unsigned int dieNo);

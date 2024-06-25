@@ -100,7 +100,7 @@ void handle_nvme_io_dsm(unsigned int cmdSlotTag, NVME_IO_COMMAND *nvmeIOCmd)
 	{
 		nr = dmInfo10.NR + 1;
 		trim_flag = 1;
-
+		//xil_printf("1st nr : %d\r\n",nr);
 		unsigned int reqSlotTag = GetFromFreeReqQ();
 		reqPoolPtr->reqPool[reqSlotTag].reqType = REQ_TYPE_SLICE;
 		reqPoolPtr->reqPool[reqSlotTag].reqCode = REQ_CODE_RxDMA;
@@ -154,7 +154,7 @@ void handle_nvme_io_cmd(NVME_COMMAND *nvmeCmd)
 	{
 		case IO_NVM_DATASET_MANAGEMENT:
 		{
-			PRINT("IO DSM Command\r\n");
+			//xil_printf("IO DSM Command\r\n");
 			handle_nvme_io_dsm(nvmeCmd->cmdSlotTag,nvmeIOCmd);
 			break;
 		}

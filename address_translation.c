@@ -89,7 +89,7 @@ void InitAddressMap()
 	InitSliceMap();
 	InitBlockDieMap();
 
-	for (int i = 0; i < (USER_PAGES_PER_SSD / 8); ++i) {
+	for (int i = 0; i < (USER_PAGES_PER_SSD / 64); ++i) {
         trimValidBitMapPtr->valid_bit_map[i] = 0;
     }
 
