@@ -71,11 +71,17 @@ void InitGcVictimMap()
 
 void GarbageCollection(unsigned int dieNo)
 {
+	gc_cnt += 1;
+	if((do_trim_flag == 1)&&(return_flag==1))
+	{
+		xil_printf("gc trim here\r\n");
+	}
 
-	if(do_trim_flag==1)
+	if((do_trim_flag == 1)&&(return_flag==1))
 	{
 		trimming_flag = DoTrim(0);
 	}
+	XTime_GetTime(&gcStart);
 
 	//xil_printf("Activate GarbageCollection!!\r\n");
 	unsigned int victimBlockNo, pageNo, virtualSliceAddr, logicalSliceAddr, dieNoForGcCopy, reqSlotTag;
@@ -137,6 +143,15 @@ void GarbageCollection(unsigned int dieNo)
 	}
 
 	EraseBlock(dieNo, victimBlockNo);
+
+	XTime_GetTime(&gcEnd);
+	gcTime += gcEnd - gcStart;
+
+	if(gc_cnt>=10)
+	{
+		xil_printf("gc time = %llu\r\n",gcTime);
+		gc_cnt = 0;
+	}
 }
 
 
