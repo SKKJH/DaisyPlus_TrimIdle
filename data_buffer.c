@@ -47,6 +47,7 @@
 #include "xil_printf.h"
 #include <assert.h>
 #include "memory_map.h"
+#include "trim.h"
 
 
 P_DATA_BUF_MAP dataBufMapPtr;
@@ -66,7 +67,7 @@ void InitDataBuf()
 
 	dmRangePtr = (P_DSM_RANGE) DSM_RANGE_ADDR;
 
-	for(bufEntry = 0; bufEntry < AVAILABLE_DATA_BUFFER_ENTRY_COUNT; bufEntry++)
+	for(bufEntry = 0; bufEntry < AVAILABLE_DATA_BUFFER_ENTRY_COUNT-1; bufEntry++)
 	{
 		dataBufMapPtr->dataBuf[bufEntry].logicalSliceAddr = LSA_NONE;
 		dataBufMapPtr->dataBuf[bufEntry].blk0 = 0;
@@ -84,6 +85,21 @@ void InitDataBuf()
 		dataBufMapPtr->dataBuf[bufEntry].hashNextEntry = DATA_BUF_NONE;
 	}
 
+	dataBufMapPtr->dataBuf[AVAILABLE_DATA_BUFFER_ENTRY_COUNT-1].logicalSliceAddr = LSA_NONE;
+	dataBufMapPtr->dataBuf[AVAILABLE_DATA_BUFFER_ENTRY_COUNT-1].blk0 = 0;
+	dataBufMapPtr->dataBuf[AVAILABLE_DATA_BUFFER_ENTRY_COUNT-1].blk1 = 0;
+	dataBufMapPtr->dataBuf[AVAILABLE_DATA_BUFFER_ENTRY_COUNT-1].blk2 = 0;
+	dataBufMapPtr->dataBuf[AVAILABLE_DATA_BUFFER_ENTRY_COUNT-1].blk3 = 0;
+	dataBufMapPtr->dataBuf[AVAILABLE_DATA_BUFFER_ENTRY_COUNT-1].prevEntry = DATA_BUF_NONE;
+	dataBufMapPtr->dataBuf[AVAILABLE_DATA_BUFFER_ENTRY_COUNT-1].nextEntry = DATA_BUF_NONE;
+	dataBufMapPtr->dataBuf[AVAILABLE_DATA_BUFFER_ENTRY_COUNT-1].dirty = DATA_BUF_CLEAN;
+	dataBufMapPtr->dataBuf[AVAILABLE_DATA_BUFFER_ENTRY_COUNT-1].blockingReqTail =  REQ_SLOT_TAG_NONE;
+
+	dataBufHashTablePtr->dataBufHash[AVAILABLE_DATA_BUFFER_ENTRY_COUNT-1].headEntry = DATA_BUF_NONE;
+	dataBufHashTablePtr->dataBufHash[AVAILABLE_DATA_BUFFER_ENTRY_COUNT-1].tailEntry = DATA_BUF_NONE;
+	dataBufMapPtr->dataBuf[AVAILABLE_DATA_BUFFER_ENTRY_COUNT-1].hashPrevEntry = DATA_BUF_NONE;
+	dataBufMapPtr->dataBuf[AVAILABLE_DATA_BUFFER_ENTRY_COUNT-1].hashNextEntry = DATA_BUF_NONE;
+
 	for (bufEntry = 0; bufEntry < 3000; bufEntry++)
 	{
 		dmRangePtr->dmRange[bufEntry].ContextAttributes.value = 0;
@@ -96,9 +112,9 @@ void InitDataBuf()
 	// ~Delayed Write Buffer & Trim Range Entry
 
 	dataBufMapPtr->dataBuf[0].prevEntry = DATA_BUF_NONE;
-	dataBufMapPtr->dataBuf[AVAILABLE_DATA_BUFFER_ENTRY_COUNT - 1].nextEntry = DATA_BUF_NONE;
+	dataBufMapPtr->dataBuf[AVAILABLE_DATA_BUFFER_ENTRY_COUNT - 2].nextEntry = DATA_BUF_NONE;
 	dataBufLruList.headEntry = 0 ;
-	dataBufLruList.tailEntry = AVAILABLE_DATA_BUFFER_ENTRY_COUNT - 1;
+	dataBufLruList.tailEntry = AVAILABLE_DATA_BUFFER_ENTRY_COUNT - 2;
 
 	for(bufEntry = 0; bufEntry < AVAILABLE_TEMPORARY_DATA_BUFFER_ENTRY_COUNT; bufEntry++)
 		tempDataBufMapPtr->tempDataBuf[bufEntry].blockingReqTail =  REQ_SLOT_TAG_NONE;
@@ -206,8 +222,13 @@ unsigned int CheckDataBufHit(unsigned int reqSlotTag)
 	return DATA_BUF_FAIL;
 }
 
-unsigned int AllocateDataBuf()
+unsigned int AllocateDataBuf(unsigned flag)
 {
+	if (flag == 1)
+	{
+		return (AVAILABLE_DATA_BUFFER_ENTRY_COUNT-1);
+	}
+
 	unsigned int evictedEntry = dataBufLruList.tailEntry;
 
 	if(evictedEntry == DATA_BUF_NONE)
@@ -234,6 +255,10 @@ unsigned int AllocateDataBuf()
 
 	SelectiveGetFromDataBufHashList(evictedEntry);
 
+	if(trim_flag==1)
+	{
+		xil_printf("entry: %d\r\n",evictedEntry);
+	}
 	return evictedEntry;
 }
 
@@ -243,7 +268,7 @@ void UpdateDataBufEntryInfoBlockingReq(unsigned int bufEntry, unsigned int reqSl
 	if(dataBufMapPtr->dataBuf[bufEntry].blockingReqTail != REQ_SLOT_TAG_NONE)
 	{
 		reqPoolPtr->reqPool[reqSlotTag].prevBlockingReq = dataBufMapPtr->dataBuf[bufEntry].blockingReqTail;
-		reqPoolPtr->reqPool[reqPoolPtr->reqPool[reqSlotTag].prevBlockingReq].nextBlockingReq  = reqSlotTag;
+		reqPoolPtr->reqPool[reqPoolPtr->reqPool[reqSlotTag].prevBlockingReq].nextBlockingReq = reqSlotTag;
 	}
 
 	dataBufMapPtr->dataBuf[bufEntry].blockingReqTail = reqSlotTag;

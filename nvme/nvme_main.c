@@ -87,6 +87,18 @@ static nand_op_type nand_op;
 
 void nvme_main()
 {
+	trimCmdTime = 0;
+	dataTime = 0;
+	dataStart = 0;
+	dataEnd = 0;
+	bufTime = 0;
+	tableTime = 0;
+	writeTime = 0;
+	bitTime = 0;
+	ingbufTime = 0;
+	ingtableTime = 0;
+	ingwriteTime = 0;
+
 	global_write_cnt = 0;
 	global_flush_cnt = 0;
 	unsigned int exeLlr;
@@ -98,6 +110,7 @@ void nvme_main()
 	cmd_by_trim = 0;
 	nr_sum = 0;
 	trim_index = 0;
+	gc_cnt = 0;
 	unsigned int i_time = 0;
 
 	xil_printf("!!! Wait until FTL reset complete !!! \r\n");
@@ -109,6 +122,11 @@ void nvme_main()
 
 	while(1)
 	{
+		trimCmdTime = 0;
+//		bufTime = 0;
+//		tableTime = 0;
+//		writeTime = 0;
+		bitTime = 0;
 		exeLlr = 1;
 
 		if(g_nvmeTask.status == NVME_TASK_WAIT_CC_EN)
@@ -151,11 +169,11 @@ void nvme_main()
 			}
 	       	if (trim_flag == 1)
 		   	{
-				while(nvmeDmaReqQ.headReq != REQ_SLOT_TAG_NONE)
-				{
-						CheckDoneNvmeDmaReq();
-				}
+				XTime_GetTime(&dataStart);
 				GetTrimData();
+				XTime_GetTime(&dataEnd);
+				dataTime += dataEnd - dataStart;
+				//DoTrim(0);
 			}
 		}
 		else if(g_nvmeTask.status == NVME_TASK_SHUTDOWN)
@@ -182,7 +200,9 @@ void nvme_main()
 
 				//flush grown bad block info
 				UpdateBadBlockTableForGrownBadBlock(RESERVED_DATA_BUFFER_BASE_ADDR);
-
+				xil_printf("idle // data time: %llu, buf time: %llu, table time: %llu\n", dataTime, ingbufTime, ingtableTime);
+				xil_printf("busy // buf time: %llu, table time: %llu\n", bufTime, tableTime);
+				xil_printf("write // write time: %llu\n", writeTime);
 				xil_printf("\r\nNVMe shutdown!!!\r\n");
 			}
 		}
@@ -471,12 +491,12 @@ void nvme_main()
 #endif
 #endif
 		}
-
-		if((do_trim_flag==1) && (i_time > 10000000))
+		if((do_trim_flag == 1) && (i_time > 100000000))
 		{
 			trimming_flag = DoTrim(1);
-			//trimming_flag will be used to use delay write list
+			i_time = 0;
 		}
+
 	}
 }
 

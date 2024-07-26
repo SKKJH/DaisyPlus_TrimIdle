@@ -166,8 +166,8 @@
 //#define	USER_BLOCKS_PER_LUN		4096		//user configurable factor
 //#define	USER_CHANNELS			(NUMBER_OF_CONNECTED_CHANNEL)		//user configurable factor
 //#define	USER_WAYS				8			//user configurable factor
-#define	USER_BLOCKS_PER_LUN		128		//user configurable factor
-#define	USER_CHANNELS			2		//user configurable factor
+#define	USER_BLOCKS_PER_LUN		512		//user configurable factor
+#define	USER_CHANNELS			4		//user configurable factor
 #define	USER_WAYS				4			//user configurable factor
 //************************************************************************
 

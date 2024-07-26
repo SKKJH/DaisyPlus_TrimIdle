@@ -71,13 +71,11 @@ void InitGcVictimMap()
 
 void GarbageCollection(unsigned int dieNo)
 {
-
-	if(do_trim_flag==1)
+	if(do_trim_flag == 1)
 	{
 		trimming_flag = DoTrim(0);
+		xil_printf("GC Trim Occur\r\n");
 	}
-
-	//xil_printf("Activate GarbageCollection!!\r\n");
 	unsigned int victimBlockNo, pageNo, virtualSliceAddr, logicalSliceAddr, dieNoForGcCopy, reqSlotTag;
 
 	victimBlockNo = GetFromGcVictimList(dieNo);
@@ -137,6 +135,7 @@ void GarbageCollection(unsigned int dieNo)
 	}
 
 	EraseBlock(dieNo, victimBlockNo);
+
 }
 
 
